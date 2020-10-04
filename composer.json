@@ -1,0 +1,26 @@
+{
+    "name": "sourcegr/freakquent",
+    "description": "An eloquent-like no-bullshit lib",
+    "type": "library",
+    "require": {
+        "sourcegr/query-builder": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.3"
+    },
+    "autoload": {
+        "psr-4": {"Sourcegr\\Freakquent\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Tests\\":  "tests/"}
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vagelis Papas",
+            "email": "papas@source.gr",
+            "homepage": "https://www.source.gr",
+            "role": "Developer"
+        }
+    ]
+}
