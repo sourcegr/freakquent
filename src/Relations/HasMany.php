@@ -77,7 +77,6 @@
             $lk = $this->localKey;
 
             $instance->$fk = $in->$lk;
-            var_dump($instance);
             $instance->save();
         }
 
