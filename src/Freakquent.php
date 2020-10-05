@@ -6,33 +6,53 @@
     namespace Sourcegr\Freakquent;
 
 
+    use Sourcegr\Freakquent\Exceptions\InvalidArgumentException;
     use Sourcegr\QueryBuilder\DB;
 
 
     class Freakquent
     {
         private static $instance = null;
-        /**
-         * @var DB $DB
-         */
-        public static $DB;
+        private static $connections = [];
 
         /**
-         * @param DB $DB
+         * @var Capsule $capsule
+         */
+        public $capsule = null;
+
+        /**
+         * @param Capsule $capsule
          *
          * @return Freakquent|null
          */
-        public static function init(DB $DB)
+        public static function init(string $name, $config)
         {
-            if (static::$instance) {
+            $grammar = '\\Sourcegr\\QueryBuilder\\Grammars\\' . ucfirst($config['GRAMMAR']);
+            if (class_exists($grammar)) {
+                $db = new DB(new $grammar($config));
+            } else {
+                $db = new DB([]);
+            }
+
+
+            static::$instance = static::$instance ?? $db;
+            static::$connections[$name] = $db;
+
+            return $db;
+        }
+
+        public static function getConnection($name = null)
+        {
+            if (!$name) {
                 return static::$instance;
             }
 
-            $me = new static();
+            $connection = static::$connections[$name] ?? null;
 
-            static::$DB = $DB;
-            static::$instance = $me;
+            if (!$connection) {
+                throw new InvalidArgumentException('Could not get named connection '. $name);
+            }
 
-            return $me;
+            return $connection;
         }
     }

@@ -23,6 +23,7 @@
 
         protected static $primaryKey = 'id';
         protected static $table = null;
+        protected static $connectionName = null;
 
         protected $existing = false;
         protected $deleted = false;
@@ -62,6 +63,7 @@
             self::getAllFields();
             self::getMassAssignableFields();
             self::getSerializableFields();
+
 
 
             if ($data) {
@@ -198,7 +200,8 @@
          */
         public static function getDB()
         {
-            return Freakquent::$DB->Table(static::$table);
+            $caller = get_called_class();
+            return Freakquent::getConnection($caller::$connectionName)->Table($caller::$table);
         }
 
         /**

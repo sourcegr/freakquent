@@ -16,9 +16,7 @@
 
         private function init()
         {
-            $grammar = new MySQL(['DB' => 'test']);
-            $db = new DB($grammar);
-            Freakquent::init($db);
+            Freakquent::init('mysql', ['GRAMMAR' => 'MySQL']);
         }
 
         private function createCompany() {

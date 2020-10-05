@@ -19,9 +19,7 @@
 
         private function init()
         {
-            $grammar = new MySQL([]);
-            $DB = new DB($grammar);
-            Freakquent::init($DB);
+            $db = Freakquent::init('mysql', ['GRAMMAR' => 'MySQL']);
             $this->cleanupDB();
         }
 
